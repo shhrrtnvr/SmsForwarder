@@ -1,7 +1,7 @@
-SmsForwarder 不会收集任何您的隐私数据！！！
+SmsForwarder does not collect any of your private data.
 
-APP启动时发送版本信息发送到友盟统计；
+When the app starts, it may send version information for statistics.
 
-手动检查新版本时发送版本号用于检查新版本；
+When manually checking for a new version, the version number is sent to check for updates.
 
-除此之外，没有任何数据！！！
+Other than that, no data is collected or sent to any other third parties, except for the webhook URL you configure.

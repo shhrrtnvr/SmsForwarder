@@ -1,40 +1,40 @@
-#=========================================基础不变的混淆配置=========================================##
-#指定代码的压缩级别
+#========================================= Basic Obfuscation Configuration =========================================##
+# Specify the compression level of the code
 -optimizationpasses 5
-#包名不混合大小写
+# Package names do not mix uppercase and lowercase
 -dontusemixedcaseclassnames
-#不去忽略非公共的库类
+# Do not ignore non-public library classes
 #-dontskipnonpubliclibraryclasses
-# 指定不去忽略非公共的库的类的成员
+# Specify not to ignore members of non-public library classes
 #-dontskipnonpubliclibraryclassmembers
-#优化  不优化输入的类文件
+# Optimization - Do not optimize input class files
 -dontoptimize
-#预校验
+# Pre-validation
 #-dontpreverify
-#混淆时是否记录日志
+# Whether to log during obfuscation
 -verbose
-# 混淆时所采用的算法
+# Algorithm used during obfuscation
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
-#保护注解
+# Protect annotations
 -keepattributes *Annotation*
-#忽略警告
+# Ignore warnings
 -ignorewarnings
 
-##记录生成的日志数据,gradle build时在本项目根目录输出##
-#apk 包内所有 class 的内部结构
+## Record generated log data, output to the root directory of this project during gradle build ##
+# Internal structure of all classes in the apk package
 #-dump class_files.txt
-#未混淆的类和成员
+# Unobfuscated classes and members
 -printseeds seeds.txt
-#列出从 apk 中删除的代码
+# List code removed from apk
 -printusage unused.txt
-#混淆前后的映射
+# Mapping before and after obfuscation
 -printmapping mapping.txt
-# 并保留源文件名为"Proguard"字符串，而非原始的类名 并保留行号
+# And keep the source file name as "Proguard" string instead of the original class name and keep the line number
 -keepattributes SourceFile,LineNumberTable
-########记录生成的日志数据，gradle build时 在本项目根目录输出-end#####
+######## Record generated log data, output to the root directory of this project during gradle build - end #####
 
-#需要保留的东西
-# 保持哪些类不被混淆
+# Things to keep
+# Keep which classes from being obfuscated
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
@@ -46,14 +46,14 @@
 -keep public class * extends android.support.v4.**
 #-keep public class com.android.vending.licensing.ILicensingService
 
-#如果有引用v4包可以添加下面这行
+# If you reference the v4 package, you can add the following line
 #-keep public class * extends android.support.v4.app.Fragment
 
-##########JS接口类不混淆，否则执行不了
+########## JS interface classes are not obfuscated, otherwise they cannot be executed
 -dontwarn com.android.JsInterface.**
 -keep class com.android.JsInterface.** {*; }
 
-#极光推送和百度lbs android sdk一起使用proguard 混淆的问题#http的类被混淆后，导致apk定位失败，保持apache 的http类不被混淆就好了
+# Problem with JPUSH and Baidu LBS Android SDK used together with proguard obfuscation # After the http class is obfuscated, the apk positioning fails. Just keep the apache http class from being obfuscated
 -dontwarn org.apache.**
 -keep class org.apache.**{ *; }
 
@@ -64,30 +64,30 @@
   public void set*(...);
  }
 
-#保持 native 方法不被混淆
+# Keep native methods from being obfuscated
 -keepclasseswithmembernames class * {
   native <methods>;
 }
 
-#保持自定义控件类不被混淆
+# Keep custom control classes from being obfuscated
 -keepclasseswithmembers class * {
   public <init>(android.content.Context, android.util.AttributeSet);
 }
 
-#保持自定义控件类不被混淆
+# Keep custom control classes from being obfuscated
 -keepclassmembers class * extends android.app.Activity {
   public void *(android.view.View);
 }
 
-#保持 Parcelable 不被混淆
+# Keep Parcelable from being obfuscated
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
 
-#保持 Serializable 不被混淆
+# Keep Serializable from being obfuscated
 -keepnames class * implements java.io.Serializable
 
-#保持 Serializable 不被混淆并且enum 类也不被混淆
+# Keep Serializable from being obfuscated and enum classes from being obfuscated
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
@@ -100,7 +100,7 @@
     java.lang.Object readResolve();
 }
 
-#保持枚举 enum 类不被混淆 如果混淆报错，建议直接使用上面的 -keepclassmembers class * implements java.io.Serializable即可
+# Keep enum classes from being obfuscated. If obfuscation reports an error, it is recommended to directly use the above -keepclassmembers class * implements java.io.Serializable
 -keepclassmembers enum * {
       public static **[] values();
       public static ** valueOf(java.lang.String);
@@ -110,15 +110,15 @@
       public void *ButtonClicked(android.view.View);
 }
 
-#不混淆资源类
+# Do not obfuscate resource classes
 -keep class **.R$* {*;}
 
-#===================================混淆保护自己项目的部分代码以及引用的第三方jar包library=============================#######
-#如果引用了v4或者v7包
+#=================================== Obfuscate and protect some project code and referenced third-party jar library =============================#######
+# If v4 or v7 package is referenced
 -dontwarn android.support.**
 
 
-# AndroidX 防止混淆
+# AndroidX prevent obfuscation
 -dontwarn com.google.android.material.**
 -dontnote com.google.android.material.**
 -dontwarn androidx.**
@@ -134,10 +134,10 @@
 -dontwarn com.google.zxing.**
 -keep class com.google.zxing.**{*;}
 
-#SignalR推送
+# SignalR push
 -keep class microsoft.aspnet.signalr.** { *; }
 
-# 极光推送混淆
+# JPush obfuscation
 #-dontoptimize
 #-dontpreverify
 #-dontwarn cn.jpush.**
@@ -145,7 +145,7 @@
 #-dontwarn cn.jiguang.**
 #-keep class cn.jiguang.** { *; }
 
-# 数据库框架OrmLite
+# Database framework OrmLite
 -keepattributes *DatabaseField*
 -keepattributes *DatabaseTable*
 -keepattributes *SerializedName*
@@ -232,9 +232,9 @@
 # xrouter
 -keep public class com.xuexiang.xrouter.routes.**{*;}
 -keep class * implements com.xuexiang.xrouter.facade.template.ISyringe{*;}
-# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
+# If the byType method is used to obtain the Service, the following rules must be added to protect the interface
 -keep interface * implements com.xuexiang.xrouter.facade.template.IProvider
-# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
+# If single class injection is used, that is, the interface implementation IProvider is not defined, the following rules must be added to protect the implementation
 -keep class * implements com.xuexiang.xrouter.facade.template.IProvider
 
 # xupdate
@@ -252,7 +252,7 @@
     @com.xuexiang.xipc.annotation.* <methods>;
 }
 
-# umeng统计
+# umeng statistics
 -keep class com.umeng.** {*;}
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
@@ -264,10 +264,10 @@
 
 -keep class com.xuexiang.xui.widget.edittext.materialedittext.** { *; }
 
-# Android Keep Alive(安卓保活)，Cactus 集成双进程前台服务，JobScheduler，onePix(一像素)，WorkManager，无声音乐
+# Android Keep Alive, Cactus integrated dual-process foreground service, JobScheduler, onePix, WorkManager, silent music
 -keep class com.gyf.cactus.entity.* {*;}
 
-# 排除实体类
+# Exclude entity classes
 -keep class com.idormy.sms.forwarder.core.http.entity.** {*;}
 -keep class com.idormy.sms.forwarder.database.entity.** {*;}
 -keep class com.idormy.sms.forwarder.entity.** {*;}
@@ -287,9 +287,9 @@
 
 -keep public class com.xuexiang.xrouter.routes.**{*;}
 -keep class * implements com.xuexiang.xrouter.facade.template.ISyringe{*;}
-# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
+# If the byType method is used to obtain the Service, the following rules must be added to protect the interface
 -keep interface * implements com.xuexiang.xrouter.facade.template.IProvider
-# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
+# If single class injection is used, that is, the interface implementation IProvider is not defined, the following rules must be added to protect the implementation
 -keep class * implements com.xuexiang.xrouter.facade.template.IProvider
 
 -dontwarn com.alipay.sdk.**
@@ -306,6 +306,6 @@
 # MultiLanguages
 -keep class com.hjq.language.** {*;}
 
-# crontab解析
+# crontab parsing
 -keep class gatewayapps.crondroid.** { *; }
 -keep class net.redhogs.cronparser.** { *; }

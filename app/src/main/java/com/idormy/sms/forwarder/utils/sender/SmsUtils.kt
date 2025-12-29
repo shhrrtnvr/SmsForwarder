@@ -1,5 +1,9 @@
 package com.idormy.sms.forwarder.utils.sender
 
+import android.Manifest
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import com.idormy.sms.forwarder.App
 import com.idormy.sms.forwarder.entity.MsgInfo
 import com.idormy.sms.forwarder.utils.Log
@@ -10,6 +14,8 @@ class SmsUtils {
     companion object {
         private val TAG: String = SmsUtils::class.java.simpleName
 
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+        @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
         fun sendMsg(msgInfo: MsgInfo) {
             val mobile = SettingUtils.fallbackSmsPhone
             if (mobile.isEmpty()) return
