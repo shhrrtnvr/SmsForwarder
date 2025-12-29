@@ -1,7 +1,6 @@
 package com.idormy.sms.forwarder.utils
 
 import com.idormy.sms.forwarder.entity.MsgInfo
-import com.idormy.sms.forwarder.utils.sender.SmsUtils
 import com.idormy.sms.forwarder.utils.sender.WebhookUtils
 import com.xuexiang.xutil.net.NetworkUtils
 
